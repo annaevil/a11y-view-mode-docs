@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A11y View Mode</title>
+  <link rel="stylesheet" href="../dist/styles/index.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <header class="demo-header">
+    <h1>A11y View Mode - Demo</h1>
+    <p>Демо покрывает все публичные настройки: режимы, текст, контраст, темы, изображения, хранение, язык и варианты
+      кнопки.</p>
+  </header>
+
+  <main class="demo-layout">
+    <section class="demo-section">
+      <h2>1. Режим и инициализация</h2>
+      <div class="controls">
+        <button id="mode-auto">AUTO</button>
+        <button id="mode-control">CONTROL</button>
+        <button id="destroy">Destroy</button>
+      </div>
+      <div class="hint">
+        <p>
+          <span><strong>AUTO:</strong> только кнопка. По нажатию применяется пресет.</span>
+          <span><strong>CONTROL:</strong> кнопка + панель с пользовательскими настройками.</span>
+          <span><strong>Destroy:</strong> удаляет кнопку/панель и очищает атрибуты режима.</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>2. Базовые переключатели</h2>
+      <div class="controls">
+        <button id="enable">Enable</button>
+        <button id="disable">Disable</button>
+        <button id="toggle">Toggle</button>
+        <button id="reset">Reset</button>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>3. Текст и читаемость</h2>
+      <h3>Размер шрифта</h3>
+      <div class="controls">
+        <button data-fs="1">1x</button>
+        <button data-fs="1.25">1.25x</button>
+        <button data-fs="1.5">1.5x</button>
+        <button data-fs="2">2x</button>
+      </div>
+
+      <h3>Семейство и выравнивание</h3>
+      <div class="controls">
+        <button data-font-family="default">Font default</button>
+        <button data-font-family="serif">Font serif</button>
+        <button data-text-align="default">Align default</button>
+        <button data-text-align="left">Align left</button>
+      </div>
+
+      <h3>Интервалы</h3>
+      <div class="controls">
+        <button data-line-height="default">Line default</button>
+        <button data-line-height="1.5">Line 1.5</button>
+        <button data-line-height="2">Line 2</button>
+        <button data-line-height="2.5">Line 2.5</button>
+      </div>
+      <div class="controls">
+        <button data-letter-spacing="default">Letter default</button>
+        <button data-letter-spacing="0.12">Letter 0.12</button>
+        <button data-letter-spacing="0.16">Letter 0.16</button>
+        <button data-letter-spacing="0.2">Letter 0.2</button>
+      </div>
+      <div class="controls">
+        <button data-word-spacing="default">Word default</button>
+        <button data-word-spacing="0.16">Word 0.16</button>
+        <button data-word-spacing="0.2">Word 0.2</button>
+        <button data-word-spacing="0.5">Word 0.5</button>
+      </div>
+      <div class="controls">
+        <button data-paragraph-spacing="default">Paragraph default</button>
+        <button data-paragraph-spacing="2">Paragraph 2</button>
+        <button data-paragraph-spacing="2.25">Paragraph 2.25</button>
+        <button data-paragraph-spacing="2.5">Paragraph 2.5</button>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>4. Контраст и тема</h2>
+      <h3>Контраст</h3>
+      <div class="controls">
+        <button data-contrast="default">Contrast default</button>
+        <button data-contrast="high">Contrast high</button>
+        <button data-contrast="inverse">Contrast inverse</button>
+      </div>
+
+      <h3>Тема (color scheme)</h3>
+      <div class="controls">
+        <button data-scheme="default">Theme default</button>
+        <button data-scheme="light">Theme light</button>
+        <button data-scheme="dark">Theme dark</button>
+        <button data-scheme="sepia">Theme sepia</button>
+      </div>
+      <div class="hint">
+        <p>
+          <span>Тема и контраст — разные параметры. Тема меняет цветовую схему, контраст усиливает читабельность.</span>
+          <span>Проверь оба блока отдельно и вместе (например: dark + high).</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>5. Ссылки и анимация</h2>
+      <div class="forexample">
+        <div class="forexample-demo">Пример ссылки: <a href="#">a11y-demo-link</a></div>
+        <div class="forexample-demo motion-demo">
+          <span class="motion-demo__text">Пример анимации:</span>
+          <span class="motion-demo__dot"></span>
+        </div>
+      </div>
+      <div class="controls">
+        <button data-link-style="default">Links default</button>
+        <button data-link-style="underline">Links underline</button>
+        <button data-motion="on">Motion: OFF</button>
+        <button data-motion="off">Motion: ON</button>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>6. Изображения и strategy</h2>
+      <div class="controls">
+        <button data-images="show">Images show</button>
+        <button data-images="hide">Images hide</button>
+        <button data-images="grayscale">Images grayscale</button>
+      </div>
+      <div class="controls">
+        <button id="strategy-transparent">Strategy transparent</button>
+        <button id="strategy-collapse">Strategy collapse</button>
+      </div>
+      <div class="hint">
+        <p>
+          <span><strong>Важно:</strong> стратегии <code>transparent</code> и <code>collapse</code> работают только когда
+            режим изображений = <code>hide</code>.</span>
+          <span><strong>transparent:</strong> визуально скрывает контент, старается мягко сохранить поток.</span>
+          <span><strong>collapse:</strong> сильнее сжимает блоки с изображениями, уменьшая их влияние на layout.</span>
+        </p>
+      </div>
+
+      <div class="gallery">
+        <article class="card media-card">
+          <h3>Карточка 1</h3>
+          <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=900&q=80&auto=format&fit=crop"
+            alt="Горный пейзаж" />
+        </article>
+        <article class="card media-card">
+          <h3>Карточка 2</h3>
+          <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=900&q=80&auto=format&fit=crop"
+            alt="Лес и озеро" />
+        </article>
+      </div>
+
+      <div class="slider js-slider">
+        <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=900&q=80&auto=format&fit=crop"
+          alt="Слайд 1" />
+        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=900&q=80&auto=format&fit=crop"
+          alt="Слайд 2" />
+        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=900&q=80&auto=format&fit=crop"
+          alt="Слайд 3" />
+      </div>
+
+      <div class="demo-hide-flag">Проверка hideClass: demo-images-hide</div>
+    </section>
+
+    <section class="demo-section">
+      <h2>7. Хранение состояния</h2>
+      <div class="controls">
+        <button id="storage-none">Storage NONE</button>
+        <button id="storage-local">Storage LOCAL</button>
+        <button id="storage-session">Storage SESSION</button>
+        <button id="clear-storage">Очистить storage</button>
+      </div>
+      <div class="hint">
+        <p>
+          <span><strong>NONE:</strong> состояние не сохраняется.</span>
+          <span><strong>LOCAL:</strong> сохранение в localStorage до ручной очистки.</span>
+          <span><strong>SESSION:</strong> сохранение в sessionStorage до закрытия вкладки.</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>8. Язык панели</h2>
+      <div class="controls">
+        <button id="locale-ru">RU</button>
+        <button id="locale-en">EN</button>
+      </div>
+      <div class="hint">
+        <p>
+          <span>Переключение языка на лету работает в control-режиме через публичный API <code>setLocale</code>.</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>9. Варианты кнопки</h2>
+      <div class="controls">
+        <button id="ui-text">UI: текст</button>
+        <button id="ui-icon">UI: иконка</button>
+        <button id="ui-icon-text">UI: иконка + текст</button>
+      </div>
+      <div class="hint">
+        <p>
+          <span>Проверка режимов кнопки: только label, только icon, icon + label.</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>10. Debug state</h2>
+      <div class="controls">
+        <button id="log-state">Лог состояния в консоль</button>
+      </div>
+      <pre id="state"></pre>
+    </section>
+  </main>
+
+  <script type="module">
+    import { createA11yView } from '../dist/index.mjs'
+
+    let a11y = null
+    let mode = 'control'
+    let locale = 'ru'
+    let storageMode = 'sessionStorage'
+    let hideStrategy = 'transparent'
+    let uiMode = 'text'
+
+    const stateEl = document.getElementById('state')
+
+    function currentButtonConfig() {
+      const label = mode === 'auto' ? 'Версия для слабовидящих' : 'A11Y'
+      const baseAria = 'Открыть настройки доступности'
+
+      if (uiMode === 'icon') {
+        return {
+          icon: './assets/eye.svg',
+          showLabel: false,
+          ariaLabel: baseAria
+        }
+      }
+
+      if (uiMode === 'icon-text') {
+        return {
+          icon: './assets/eye.svg',
+          label,
+          showLabel: true,
+          ariaLabel: baseAria
+        }
+      }
+
+      return {
+        label,
+        ariaLabel: baseAria
+      }
+    }
+
+    function renderState() {
+      if (!a11y) return
+      stateEl.textContent = JSON.stringify(a11y.getState(), null, 2)
+    }
+
+    function init(nextMode = mode) {
+      a11y?.destroy()
+      mode = nextMode
+
+      a11y = createA11yView({
+        activationMode: mode,
+        locale,
+        enabled: true,
+        storageMode,
+        button: currentButtonConfig(),
+        images: {
+          hideStrategy,
+          hideSelectors: ['.js-slider', '.media-card'],
+          hideClass: 'demo-images-hide'
+        }
+      })
+
+      renderState()
+      window.a11y = a11y
+    }
+
+    function bindButtons() {
+      document.getElementById('mode-auto').onclick = () => init('auto')
+      document.getElementById('mode-control').onclick = () => init('control')
+      document.getElementById('destroy').onclick = () => { a11y?.destroy(); renderState() }
+
+      document.getElementById('enable').onclick = () => { a11y?.enable(); renderState() }
+      document.getElementById('disable').onclick = () => { a11y?.disable(); renderState() }
+      document.getElementById('toggle').onclick = () => { a11y?.toggle(); renderState() }
+      document.getElementById('reset').onclick = () => { a11y?.reset(); renderState() }
+      document.getElementById('log-state').onclick = () => console.log('A11Y STATE:', a11y?.getState())
+
+      document.querySelectorAll('[data-fs]').forEach((btn) => {
+        btn.onclick = () => { a11y?.setFontScale(Number(btn.dataset.fs)); renderState() }
+      })
+      document.querySelectorAll('[data-font-family]').forEach((btn) => {
+        btn.onclick = () => { a11y?.setFontFamily(btn.dataset.fontFamily); renderState() }
+      })
+      document.querySelectorAll('[data-line-height]').forEach((btn) => {
+        btn.onclick = () => {
+          const v = btn.dataset.lineHeight
+          a11y?.setLineHeight(v === 'default' ? 'default' : Number(v))
+          renderState()
+        }
+      })
+      document.querySelectorAll('[data-letter-spacing]').forEach((btn) => {
+        btn.onclick = () => {
+          const v = btn.dataset.letterSpacing
+          a11y?.setLetterSpacing(v === 'default' ? 'default' : Number(v))
+          renderState()
+        }
+      })
+      document.querySelectorAll('[data-word-spacing]').forEach((btn) => {
+        btn.onclick = () => {
+          const v = btn.dataset.wordSpacing
+          a11y?.setWordSpacing(v === 'default' ? 'default' : Number(v))
+          renderState()
+        }
+      })
+      document.querySelectorAll('[data-paragraph-spacing]').forEach((btn) => {
+        btn.onclick = () => {
+          const v = btn.dataset.paragraphSpacing
+          a11y?.setParagraphSpacing(v === 'default' ? 'default' : Number(v))
+          renderState()
+        }
+      })
+      document.querySelectorAll('[data-text-align]').forEach((btn) => {
+        btn.onclick = () => { a11y?.setTextAlign(btn.dataset.textAlign); renderState() }
+      })
+
+      document.querySelectorAll('[data-contrast]').forEach((btn) => {
+        btn.onclick = () => { a11y?.setContrastMode(btn.dataset.contrast); renderState() }
+      })
+      document.querySelectorAll('[data-scheme]').forEach((btn) => {
+        btn.onclick = () => { a11y?.setColorScheme(btn.dataset.scheme); renderState() }
+      })
+
+      document.querySelectorAll('[data-link-style]').forEach((btn) => {
+        btn.onclick = () => { a11y?.setLinkStyle(btn.dataset.linkStyle); renderState() }
+      })
+      document.querySelectorAll('[data-motion]').forEach((btn) => {
+        btn.onclick = () => { a11y?.setReduceMotion(btn.dataset.motion); renderState() }
+      })
+
+      document.querySelectorAll('[data-images]').forEach((btn) => {
+        btn.onclick = () => { a11y?.setImagesMode(btn.dataset.images); renderState() }
+      })
+      document.getElementById('strategy-transparent').onclick = () => { hideStrategy = 'transparent'; init(mode) }
+      document.getElementById('strategy-collapse').onclick = () => { hideStrategy = 'collapse'; init(mode) }
+
+      document.getElementById('storage-none').onclick = () => { storageMode = 'none'; init(mode) }
+      document.getElementById('storage-local').onclick = () => { storageMode = 'localStorage'; init(mode) }
+      document.getElementById('storage-session').onclick = () => { storageMode = 'sessionStorage'; init(mode) }
+      document.getElementById('clear-storage').onclick = () => {
+        localStorage.clear()
+        sessionStorage.clear()
+        init(mode)
+      }
+
+      document.getElementById('locale-ru').onclick = () => { locale = 'ru'; a11y?.setLocale('ru'); renderState() }
+      document.getElementById('locale-en').onclick = () => { locale = 'en'; a11y?.setLocale('en'); renderState() }
+
+      document.getElementById('ui-text').onclick = () => { uiMode = 'text'; init(mode) }
+      document.getElementById('ui-icon').onclick = () => { uiMode = 'icon'; init(mode) }
+      document.getElementById('ui-icon-text').onclick = () => { uiMode = 'icon-text'; init(mode) }
+    }
+
+    bindButtons()
+    init('control')
+  </script>
+</body>
+
+</html>

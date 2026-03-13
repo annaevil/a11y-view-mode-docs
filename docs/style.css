@@ -1,14 +1,24 @@
-* {
+﻿* {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
   margin: 0;
   padding: 2rem 1rem 4rem;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: inherit;
   background: #f4f7fb;
   color: #0f172a;
   line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
 }
 
 .demo-layout {
@@ -29,8 +39,23 @@ body {
 }
 
 .demo-header p {
-  margin: 0.75rem 0 0;
-  color: #334155;
+  padding: 1.5rem 0 0.8rem 0;
+  color: #66696e;
+  max-width: 50%;
+  display: flex;
+  column-gap: 0.3rem;
+}
+
+.demo-header p::before {
+  content: 'i';
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 1px solid #66696e;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .demo-section {
@@ -93,6 +118,19 @@ body {
   gap: 0.35rem;
 }
 
+.hint-text p {
+  text-align: center;
+  font-family: inherit;
+}
+
+
+.font-sample {
+  font-family: inherit;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin: 0.75rem 0;
+}
+
 .forexample {
   border: 0.0625rem solid #cbd5e1;
   background: #f8fafc;
@@ -101,7 +139,7 @@ body {
   margin: 0.75rem 0;
 }
 
-.forexample-demo + .forexample-demo {
+.forexample-demo+.forexample-demo {
   margin-top: 0.6rem;
 }
 
@@ -120,8 +158,17 @@ body {
 }
 
 @keyframes pulse-dot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.5); opacity: 0.45; }
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 0.45;
+  }
 }
 
 .gallery {
@@ -168,6 +215,20 @@ body {
   color: #334155;
 }
 
+.a11y-slot {
+  margin-top: 0.75rem;
+  border: 0.125rem dashed #94a3b8;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  min-height: 3.25rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 0.5rem;
+  color: #475569;
+  background: #f8fafc;
+}
+
 #state {
   margin: 0;
   background: #0f172a;
@@ -179,7 +240,6 @@ body {
   white-space: pre-wrap;
 }
 
-/* High contrast demo compatibility */
 html.a11y-mode[data-a11y-contrast='high'] body {
   background: #000 !important;
   color: #fff !important;
@@ -199,7 +259,6 @@ html.a11y-mode[data-a11y-contrast='high'] a {
   color: #ff0 !important;
 }
 
-/* Theme demo: make color-scheme changes visible on demo shell */
 html.a11y-mode[data-a11y-color-scheme='light'] body {
   background: #f9fbff;
   color: #0f172a;
@@ -239,14 +298,26 @@ html.a11y-mode[data-a11y-color-scheme='sepia'] .hint {
 }
 
 .a11y-toggle:has(img) {
-    display: flex;
-    align-items: center;
-    column-gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+#a11y-slot .my-a11y-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
 }
 
 @media (max-width: 52rem) {
   body {
     padding: 1rem 0.5rem 2rem;
+  }
+
+  .demo-header p {
+    max-width: 100%;
+    padding-top: 2rem;
   }
 
   .demo-header,
@@ -256,6 +327,7 @@ html.a11y-mode[data-a11y-color-scheme='sepia'] .hint {
 
   .demo-header h1 {
     font-size: 1.55rem;
+    max-width: 65%;
   }
 
   .slider {

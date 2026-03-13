@@ -1,8 +1,6 @@
-# a11y-view-mode
+﻿# a11y-view-mode
 
 Low-vision accessibility mode as an npm package for existing websites and apps.
-
-## TL;DR
 
 ```bash
 npm i a11y-view-mode
@@ -19,7 +17,8 @@ createA11yView({
 })
 ```
 
-- Source demo file: `demo/index.html`
+- Docs: [https://github.com/annaevil/a11y-view-mode-docs](https://github.com/annaevil/a11y-view-mode-docs)
+- Demo page: [https://annaevil.github.io/a11y-view-mode-docs](https://annaevil.github.io/a11y-view-mode-docs)
 
 Русский: [README (RU)](#readme-ru)  
 English: [README (EN)](#readme-en)
@@ -28,27 +27,18 @@ English: [README (EN)](#readme-en)
 
 ## README RU
 
-`a11y-view-mode` — npm-библиотека версии для слабовидящих с гибкой настройкой внешнего вида и поведения.
+`a11y-view-mode` — npm-библиотека для слабовидящих с гибкой настройкой внешнего вида и поведения.
 
 ### Возможности
 
-- Режимы запуска:
-  - `auto` — одна кнопка с быстрым пресетом.
-  - `control` — кнопка + панель пользовательских настроек.
-- Настройки текста:
-  - размер шрифта, межстрочный/межбуквенный/межсловный/межабзацный интервалы, выравнивание, семейство шрифта.
-- Настройки отображения:
-  - контраст, цветовая схема, режим изображений, стиль ссылок, снижение движения.
-- Хранение состояния:
-  - `none` / `localStorage` / `sessionStorage`.
-- Локализация панели:
-  - `ru` / `en` + переопределение `labels`.
-- Кастомизация UI:
-  - классы кнопки и панели, иконка/текст/иконка+текст, `uiMount`, `disableAutoPosition`.
-- Управление панелью из API:
-  - `openPanel()`, `closePanel()`, `togglePanel()`.
-- Опция закрытия панели по клику вне:
-  - `closeOnOutsideClick`.
+- Режимы запуска: `auto` (кнопка‑пресет) и `control` (кнопка + панель).
+- Настройки текста: размер, интервалы, выравнивание, семейство шрифта.
+- Настройки отображения: контраст, тема, изображения, стиль ссылок, снижение движения.
+- Хранение состояния: `none` / `localStorage` / `sessionStorage`.
+- Локализация панели: `ru` / `en` + `labels`.
+- Кастомизация UI: классы, иконка/текст, `uiMount`, `disableAutoPosition`.
+- Управление панелью: `openPanel()`, `closePanel()`, `togglePanel()`.
+- Закрытие по клику вне панели: `closeOnOutsideClick`.
 
 ### Установка
 
@@ -63,7 +53,7 @@ npm i a11y-view-mode
 import 'a11y-view-mode/styles/index.css'
 ```
 
-Только функциональные стили (без дефолтной UI панели):
+Только core (без дефолтной панели):
 ```ts
 import 'a11y-view-mode/styles/core.css'
 ```
@@ -87,40 +77,206 @@ const a11y = createA11yView({
 })
 ```
 
-### Пример 
+### Опции (A11yViewOptions)
+
+Основные:
+- `activationMode`: `'auto' | 'control'`
+- `enabled`: `boolean`
+- `locale`: `'ru' | 'en'`
+- `storageMode`: `'none' | 'localStorage' | 'sessionStorage'` 
+- `openPanel`: `boolean` (только для `control`)
+- `closeOnOutsideClick`: `boolean` (только для `control`)
+- `cssClass`: `string` (класс на корневом контейнере, по умолчанию `a11y-mode`)
+- `root`: `HTMLElement | Document` (контейнер применения режима)
+
+Текст и визуальные настройки:
+- `fontScale`: `1 | 1.25 | 1.5 | 2`
+- `fontFamily`: `'default' | 'serif'`
+- `lineHeight`: `'default' | 1.5 | 2 | 2.5`
+- `textAlign`: `'default' | 'left'`
+- `letterSpacing`: `'default' | 0.12 | 0.16 | 0.2`
+- `wordSpacing`: `'default' | 0.16 | 0.2 | 0.5`
+- `paragraphSpacing`: `'default' | 2 | 2.25 | 2.5`
+- `contrastMode`: `'default' | 'high' | 'inverse'`
+- `colorScheme`: `'default' | 'light' | 'dark' | 'sepia'`
+- `imagesMode`: `'default' | 'show' | 'hide' | 'grayscale'`
+- `reduceMotion`: `'default' | 'on' | 'off'`
+- `linkStyle`: `'default' | 'underline'`
+
+Изображения:
+- `images.hideStrategy`: `'transparent' | 'collapse'` 
+- `images.hideSelectors`: `string[]` (скрывайте изображения вместе с родительскими контейнерами, без потери верстки)
+- `images.hideClass`: `string`
+
+Подписи панели:
+- `labels`: переопределяет тексты внутри панели (заголовки секций, подписи кнопок). Не влияет на внешнюю кнопку.
+
+UI и позиционирование:
+- `uiControlPosition`: `'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'`
+- `disableAutoPosition`: `boolean`
+- `uiMount`: `string | HTMLElement` (селектор или элемент-контейнер)
+- `buttonClassName`: `string`
+- `panelClassName`: `string`
+
+Кнопка (`button`):
+- `label`: `string`
+- `icon`: `string` (URL/путь)
+- `showLabel`: `boolean`
+- `ariaLabel`: `string` 
+- `position`: `UiControlPosition` (если нужно отдельно)
+- `useDefaultIcon`: `boolean` (встроенная SVG-иконка)
+
+### Полный пример с комментариями
 
 ```ts
 const a11y = createA11yView({
+  // базовые
   activationMode: 'control', // 'auto' | 'control'
-  locale: 'ru',              // 'ru' | 'en'
-  enabled: true,
-  storageMode: 'sessionStorage', // 'none' | 'localStorage' | 'sessionStorage'
+  enabled: true,             // включить сразу
+  locale: 'ru',              // язык панели
+  storageMode: 'localStorage', // none | localStorage | sessionStorage
+  openPanel: false,          // стартовое состояние панели (control)
+  closeOnOutsideClick: true, // закрывать панель по клику вне
 
-  openPanel: false,
-  closeOnOutsideClick: true,
+  // область применения
+  root: document,            // куда применять режим (по умолчанию html)
+  cssClass: 'a11y-mode',     // класс на root (можно переименовать)
 
-  button: {
-    label: 'Версия для слабовидящих',
-    icon: './assets/eye.svg',
-    showLabel: true,
-    ariaLabel: 'Открыть настройки доступности'
+  // текст
+  fontScale: 1.5,
+  fontFamily: 'serif',
+  lineHeight: 1.5,
+  textAlign: 'left',
+  letterSpacing: 0.12,
+  wordSpacing: 0.16,
+  paragraphSpacing: 2,
+
+  // визуальные режимы
+  contrastMode: 'high',
+  colorScheme: 'dark',
+  imagesMode: 'hide',
+  reduceMotion: 'on',
+  linkStyle: 'underline',
+
+  // изображения
+  images: {
+    hideStrategy: 'collapse',
+    hideSelectors: ['.hero', '.slider'],
+    hideClass: 'a11y-hide-images'
   },
 
+  // UI и позиционирование
+  uiControlPosition: 'top-right',
+  disableAutoPosition: false,
+  uiMount: '#a11y-slot',     // если нужно встроить в разметку 
   buttonClassName: 'my-a11y-btn',
   panelClassName: 'my-a11y-panel',
 
-  uiControlPosition: 'top-right',
-  disableAutoPosition: false,
-  // uiMount: '#a11y-slot',
-
-  images: {
-    hideStrategy: 'transparent', // 'transparent' | 'collapse'
-    hideSelectors: ['.js-slider', '.media-card'],
-    hideClass: 'demo-images-hide'
+  // кнопка
+  button: {
+    label: 'Версия для слабовидящих',
+    icon: '/assets/eye.svg',
+    showLabel: true,
+    ariaLabel: 'Открыть настройки доступности',
+    useDefaultIcon: false
   },
 
+  // авто-пресет (для activationMode: 'auto')
+  autoPreset: {
+    fontScale: 1.5,
+    contrastMode: 'high'
+  },
+
+  // переопределение подписей панели
   labels: {
-    motion: 'Снижение движения'
+    contrast: 'Выберите контраст'
+  }
+})
+```
+
+### Встраивание кнопки в разметку
+
+Если кнопку нужно встроить в верстку (а не фиксировать), используйте `uiMount` и `disableAutoPosition`:
+
+```ts
+createA11yView({
+  activationMode: 'control',
+  uiMount: '#a11y-slot',
+  disableAutoPosition: true
+})
+```
+
+```html
+<div id="a11y-slot"></div>
+```
+
+### Примеры
+
+Кнопка с кастомной иконкой:
+```ts
+createA11yView({
+  button: {
+    icon: '/assets/eye.svg',
+    showLabel: false,
+    ariaLabel: 'Открыть настройки доступности'
+  }
+})
+```
+
+Кнопка: иконка + текст:
+```ts
+createA11yView({
+  button: {
+    icon: '/assets/eye.svg',
+    label: 'Версия для слабовидящих',
+    showLabel: true
+  }
+})
+```
+
+Кнопка + изображения:
+```ts
+createA11yView({
+  button: {
+    label: 'Версия для слабовидящих',
+    icon: '/assets/eye.svg',
+    showLabel: true
+  },
+  imagesMode: 'hide',
+  images: {
+    hideStrategy: 'collapse',
+    hideSelectors: ['.hero', '.slider']
+  }
+})
+```
+
+Изображения: скрытие + стратегия:
+```ts
+createA11yView({
+  imagesMode: 'hide',
+  images: {
+    hideStrategy: 'collapse',
+    hideSelectors: ['.hero', '.slider'],
+    hideClass: 'a11y-hide-images'
+  }
+})
+```
+
+Хранение состояния:
+```ts
+createA11yView({
+  storageMode: 'sessionStorage'
+})
+```
+
+Переопределение текстов панели:
+```ts
+createA11yView({
+  labels: {
+    contrast: 'Контраст',
+    high: 'Высокий',
+    inverse: 'Инверсия',
+    default: 'По умолчанию'
   }
 })
 ```
@@ -153,31 +309,6 @@ const a11y = createA11yView({
 - `setLinkStyle(value)`
 - `setStorageMode(value)`
 
-### Важные заметки
-
-- Значение `default` в настройках означает: не форсировать стиль и вернуть поведение к базовому.
-- `images.hideStrategy` используется в режиме `imagesMode = 'hide'`.
-- `reduceMotion = 'on'` означает, что снижение движения включено (анимации/transition отключаются).
-
-### Demo
-
-- Live demo: _[]_
-- Исходник демо: `demo/index.html`
-
-### Изменения
-
--See [CHANGELOG](CHANGELOG.md).
-
-### Разработка
-
-```bash
-npm install
-npm run typecheck
-npm run typecheck:test
-npm test
-npm run build
-```
-
 ---
 
 ## README EN
@@ -186,23 +317,14 @@ npm run build
 
 ### Features
 
-- Activation modes:
-  - `auto` — single quick-preset button.
-  - `control` — button + full control panel.
-- Text controls:
-  - font size, line/letter/word/paragraph spacing, text align, font family.
-- Visual controls:
-  - contrast, color scheme, images mode, links style, reduced motion.
-- State persistence:
-  - `none` / `localStorage` / `sessionStorage`.
-- Panel localization:
-  - `ru` / `en` + `labels` overrides.
-- UI customization:
-  - button/panel classes, icon/text/icon+text, `uiMount`, `disableAutoPosition`.
-- Public panel controls:
-  - `openPanel()`, `closePanel()`, `togglePanel()`.
-- Close on outside click:
-  - `closeOnOutsideClick`.
+- Activation modes: `auto` (preset button) and `control` (button + panel).
+- Text controls: size, spacing, alignment, font family.
+- Visual controls: contrast, color scheme, images mode, links style, reduced motion.
+- State persistence: `none` / `localStorage` / `sessionStorage`.
+- Panel localization: `ru` / `en` + `labels`.
+- UI customization: classes, icon/text, `uiMount`, `disableAutoPosition`.
+- Panel API: `openPanel()`, `closePanel()`, `togglePanel()`.
+- Close on outside click: `closeOnOutsideClick`.
 
 ### Installation
 
@@ -241,40 +363,206 @@ const a11y = createA11yView({
 })
 ```
 
-### Example
+### Options (A11yViewOptions)
+
+Core:
+- `activationMode`: `'auto' | 'control'`
+- `enabled`: `boolean`
+- `locale`: `'ru' | 'en'`
+- `storageMode`: `'none' | 'localStorage' | 'sessionStorage'`
+- `openPanel`: `boolean` (control mode)
+- `closeOnOutsideClick`: `boolean` (control mode)
+- `cssClass`: `string` (root class, default `a11y-mode`)
+- `root`: `HTMLElement | Document` (apply target)
+
+Text & visual:
+- `fontScale`: `1 | 1.25 | 1.5 | 2`
+- `fontFamily`: `'default' | 'serif'`
+- `lineHeight`: `'default' | 1.5 | 2 | 2.5`
+- `textAlign`: `'default' | 'left'`
+- `letterSpacing`: `'default' | 0.12 | 0.16 | 0.2`
+- `wordSpacing`: `'default' | 0.16 | 0.2 | 0.5`
+- `paragraphSpacing`: `'default' | 2 | 2.25 | 2.5`
+- `contrastMode`: `'default' | 'high' | 'inverse'`
+- `colorScheme`: `'default' | 'light' | 'dark' | 'sepia'`
+- `imagesMode`: `'default' | 'show' | 'hide' | 'grayscale'`
+- `reduceMotion`: `'default' | 'on' | 'off'`
+- `linkStyle`: `'default' | 'underline'`
+
+Images:
+- `images.hideStrategy`: `'transparent' | 'collapse'`
+- `images.hideSelectors`: `string[]`
+- `images.hideClass`: `string`
+
+Panel labels:
+- `labels`: overrides panel texts (section titles and option labels). Does not affect the main toggle button.
+
+UI & positioning:
+- `uiControlPosition`: `'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'`
+- `disableAutoPosition`: `boolean`
+- `uiMount`: `string | HTMLElement`
+- `buttonClassName`: `string`
+- `panelClassName`: `string`
+
+Button (`button`):
+- `label`: `string`
+- `icon`: `string` (URL/path)
+- `showLabel`: `boolean`
+- `ariaLabel`: `string`
+- `position`: `UiControlPosition`
+- `useDefaultIcon`: `boolean`
+
+### Full example with comments
 
 ```ts
 const a11y = createA11yView({
+  // core
   activationMode: 'control', // 'auto' | 'control'
-  locale: 'en',              // 'ru' | 'en'
   enabled: true,
-  storageMode: 'sessionStorage', // 'none' | 'localStorage' | 'sessionStorage'
+  locale: 'en',
+  storageMode: 'localStorage', // none | localStorage | sessionStorage
+  openPanel: false,          // initial panel state (control)
+  closeOnOutsideClick: true, // close on outside click
 
-  openPanel: false,
-  closeOnOutsideClick: true,
+  // scope
+  root: document,
+  cssClass: 'a11y-mode',
 
-  button: {
-    label: 'Accessibility',
-    icon: './assets/eye.svg',
-    showLabel: true,
-    ariaLabel: 'Open accessibility settings'
+  // text
+  fontScale: 1.5,
+  fontFamily: 'serif',
+  lineHeight: 1.5,
+  textAlign: 'left',
+  letterSpacing: 0.12,
+  wordSpacing: 0.16,
+  paragraphSpacing: 2,
+
+  // visual
+  contrastMode: 'high',
+  colorScheme: 'dark',
+  imagesMode: 'hide',
+  reduceMotion: 'on',
+  linkStyle: 'underline',
+
+  // images
+  images: {
+    hideStrategy: 'collapse',
+    hideSelectors: ['.hero', '.slider'],
+    hideClass: 'a11y-hide-images'
   },
 
+  // UI & positioning
+  uiControlPosition: 'top-right',
+  disableAutoPosition: false,
+  uiMount: '#a11y-slot',
   buttonClassName: 'my-a11y-btn',
   panelClassName: 'my-a11y-panel',
 
-  uiControlPosition: 'top-right',
-  disableAutoPosition: false,
-  // uiMount: '#a11y-slot',
-
-  images: {
-    hideStrategy: 'transparent', // 'transparent' | 'collapse'
-    hideSelectors: ['.js-slider', '.media-card'],
-    hideClass: 'demo-images-hide'
+  // button
+  button: {
+    label: 'Accessibility',
+    icon: '/assets/eye.svg',
+    showLabel: true,
+    ariaLabel: 'Open accessibility settings',
+    useDefaultIcon: false
   },
 
+  // auto preset (for activationMode: 'auto')
+  autoPreset: {
+    fontScale: 1.5,
+    contrastMode: 'high'
+  },
+
+  // labels override
   labels: {
-    motion: 'Reduce motion'
+    contrast: 'Choose contrast'
+  }
+})
+```
+
+### Mount UI into layout
+
+If you need to place the button inside your layout, use `uiMount` + `disableAutoPosition`:
+
+```ts
+createA11yView({
+  activationMode: 'control',
+  uiMount: '#a11y-slot',
+  disableAutoPosition: true
+})
+```
+
+```html
+<div id="a11y-slot"></div>
+```
+
+### Examples
+
+Custom icon button:
+```ts
+createA11yView({
+  button: {
+    icon: '/assets/eye.svg',
+    showLabel: false,
+    ariaLabel: 'Open accessibility settings'
+  }
+})
+```
+
+Icon + text:
+```ts
+createA11yView({
+  button: {
+    icon: '/assets/eye.svg',
+    label: 'Accessibility',
+    showLabel: true
+  }
+})
+```
+
+Button + images:
+```ts
+createA11yView({
+  button: {
+    label: 'Accessibility',
+    icon: '/assets/eye.svg',
+    showLabel: true
+  },
+  imagesMode: 'hide',
+  images: {
+    hideStrategy: 'collapse',
+    hideSelectors: ['.hero', '.slider']
+  }
+})
+```
+
+Images: hide with strategy:
+```ts
+createA11yView({
+  imagesMode: 'hide',
+  images: {
+    hideStrategy: 'collapse',
+    hideSelectors: ['.hero', '.slider'],
+    hideClass: 'a11y-hide-images'
+  }
+})
+```
+
+State persistence:
+```ts
+createA11yView({
+  storageMode: 'sessionStorage'
+})
+```
+
+Panel labels override:
+```ts
+createA11yView({
+  labels: {
+    contrast: 'Contrast',
+    high: 'High',
+    inverse: 'Inverse',
+    default: 'Default'
   }
 })
 ```
@@ -307,33 +595,8 @@ const a11y = createA11yView({
 - `setLinkStyle(value)`
 - `setStorageMode(value)`
 
-### Notes
-
-- `default` means “do not force override” and rollback to base behavior.
-- `images.hideStrategy` is used when `imagesMode = 'hide'`.
-- `reduceMotion = 'on'` means reduced motion is enabled (animations/transitions are disabled).
-
-### Demo
-
-- Live demo: _[]_
-- Demo source: `demo/index.html`
-
-### Changelog
-
--See [CHANGELOG](CHANGELOG.md).
-
-### Development
-
-```bash
-npm install
-npm run typecheck
-npm run typecheck:test
-npm test
-npm run build
-```
-
 ---
 
 ## License
 
-ISC
+Proprietary. See LICENSE in the package.

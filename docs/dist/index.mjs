@@ -24,7 +24,7 @@ var RU_LABELS = {
   sepia: "\u0421\u0435\u043F\u0438\u044F",
   underline: "\u041F\u043E\u0434\u0447\u0435\u0440\u043A\u043D\u0443\u0442\u044C",
   left: "\u041F\u043E \u043B\u0435\u0432\u043E\u043C\u0443 \u043A\u0440\u0430\u044E",
-  serif: "\u0411\u0435\u0437 \u0437\u0430\u0441\u0435\u0447\u0435\u043A",
+  serif: "\u0421 \u0437\u0430\u0441\u0435\u0447\u043A\u0430\u043C\u0438",
   on: "\u0412\u044B\u043A\u043B.",
   off: "\u0412\u043A\u043B."
 };
@@ -424,11 +424,14 @@ function apply(state, options) {
     }
   }
   setOrRemoveVar(target, "--a11y-font-scale", String(state.fontScale));
+  setOrRemoveAttr(target, "data-a11y-font-family", state.fontFamily === "default" ? null : "on");
   setOrRemoveVar(target, "--a11y-font-family", state.fontFamily === "default" ? null : state.fontFamily);
   setOrRemoveVar(target, "--a11y-line-height", state.lineHeight === "default" ? null : String(state.lineHeight));
   setOrRemoveVar(target, "--a11y-letter-spacing", state.letterSpacing === "default" ? null : `${state.letterSpacing}em`);
   setOrRemoveVar(target, "--a11y-word-spacing", state.wordSpacing === "default" ? null : `${state.wordSpacing}em`);
+  setOrRemoveAttr(target, "data-a11y-paragraph-spacing", state.paragraphSpacing === "default" ? null : "on");
   setOrRemoveVar(target, "--a11y-paragraph-spacing", state.paragraphSpacing === "default" ? null : `${state.paragraphSpacing}em`);
+  setOrRemoveAttr(target, "data-a11y-text-align", state.textAlign === "default" ? null : "on");
   setOrRemoveVar(target, "--a11y-text-align", state.textAlign === "default" ? null : state.textAlign);
   setOrRemoveAttr(target, "data-a11y-contrast", state.contrastMode === "default" ? null : state.contrastMode);
   setOrRemoveAttr(target, "data-a11y-color-scheme", state.colorScheme === "default" ? null : state.colorScheme);
@@ -471,6 +474,9 @@ function clean(options) {
   target.removeAttribute("data-a11y-motion");
   target.removeAttribute("data-a11y-links");
   target.removeAttribute("data-a11y-control-position");
+  target.removeAttribute("data-a11y-paragraph-spacing");
+  target.removeAttribute("data-a11y-text-align");
+  target.removeAttribute("data-a11y-font-family");
 }
 
 // src/core/state.ts

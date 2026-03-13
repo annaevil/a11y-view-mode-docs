@@ -1,19 +1,18 @@
 <!doctype html>
 <html lang="ru">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A11y View Mode</title>
-  <link rel="stylesheet" href="../dist/styles/index.css" />
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="stylesheet" href="./dist/styles/core.css" />
+  <link rel="stylesheet" href="./dist/styles/ui.css" id="a11y-ui-style" />
   <link rel="stylesheet" href="./style.css" />
 </head>
-
 <body>
   <header class="demo-header">
     <h1>A11y View Mode - Demo</h1>
-    <p>Демо покрывает все публичные настройки: режимы, текст, контраст, темы, изображения, хранение, язык и варианты
-      кнопки.</p>
+    <p>Демо покрывает все публичные настройки: режимы, текст, контраст, темы, изображения, хранение, язык, стили и варианты кнопки.</p>
   </header>
 
   <main class="demo-layout">
@@ -45,6 +44,11 @@
 
     <section class="demo-section">
       <h2>3. Текст и читаемость</h2>
+      <div class="hint hint-text">
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia pariatur atque repellendus quae. Rerum, pariatur. Cum molestiae, rem eius eligendi culpa sed cumque? Iusto aperiam, dignissimos facilis distinctio ducimus quae!</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia pariatur atque repellendus quae. Rerum, pariatur. Cum molestiae, rem eius eligendi culpa sed cumque? Iusto aperiam, dignissimos facilis distinctio ducimus quae!</p>
+      </div>
+      <p class="font-sample">Съешь ещё этих мягких французских булок — пример для serif/sans.</p>
       <h3>Размер шрифта</h3>
       <div class="controls">
         <button data-fs="1">1x</button>
@@ -97,7 +101,7 @@
         <button data-contrast="inverse">Contrast inverse</button>
       </div>
 
-      <h3>Тема (color scheme)</h3>
+      <h3>Тема</h3>
       <div class="controls">
         <button data-scheme="default">Theme default</button>
         <button data-scheme="light">Theme light</button>
@@ -142,8 +146,7 @@
       </div>
       <div class="hint">
         <p>
-          <span><strong>Важно:</strong> стратегии <code>transparent</code> и <code>collapse</code> работают только когда
-            режим изображений = <code>hide</code>.</span>
+          <span><strong>Важно:</strong> стратегии <code>transparent</code> и <code>collapse</code> работают только когда режим изображений = <code>hide</code>.</span>
           <span><strong>transparent:</strong> визуально скрывает контент, старается мягко сохранить поток.</span>
           <span><strong>collapse:</strong> сильнее сжимает блоки с изображениями, уменьшая их влияние на layout.</span>
         </p>
@@ -151,24 +154,19 @@
 
       <div class="gallery">
         <article class="card media-card">
-          <h3>Карточка 1</h3>
-          <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=900&q=80&auto=format&fit=crop"
-            alt="Горный пейзаж" />
+          <h3>Image 1</h3>
+          <img src="./assets/image-1.webp" alt="Горный пейзаж" />
         </article>
         <article class="card media-card">
-          <h3>Карточка 2</h3>
-          <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=900&q=80&auto=format&fit=crop"
-            alt="Лес и озеро" />
+          <h3>Image 2</h3>
+          <img src="./assets/image-2.webp" alt="Лес и озеро" />
         </article>
       </div>
 
       <div class="slider js-slider">
-        <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=900&q=80&auto=format&fit=crop"
-          alt="Слайд 1" />
-        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=900&q=80&auto=format&fit=crop"
-          alt="Слайд 2" />
-        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=900&q=80&auto=format&fit=crop"
-          alt="Слайд 3" />
+        <img src="./assets/image-3.webp" alt="Слайд 1" />
+        <img src="./assets/image-4.webp" alt="Слайд 2" />
+        <img src="./assets/image-5.webp" alt="Слайд 3" />
       </div>
 
       <div class="demo-hide-flag">Проверка hideClass: demo-images-hide</div>
@@ -210,16 +208,30 @@
         <button id="ui-text">UI: текст</button>
         <button id="ui-icon">UI: иконка</button>
         <button id="ui-icon-text">UI: иконка + текст</button>
+        <button id="ui-fixed">UI: fixed</button>
+        <button id="ui-mount">UI: mounted</button>
       </div>
+      <div class="a11y-slot" id="a11y-slot">UI mount slot</div>
       <div class="hint">
         <p>
-          <span>Проверка режимов кнопки: только label, только icon, icon + label.</span>
+          <span>Проверка режимов кнопки: только label, только icon, icon + label. Укажите путь до иконки в настройках кнопки, используйте флаг <code>useDefaultIcon</code> для включения/выключения дефолтной svg.</span>
+          <span>Встраивание в разметку: используйте <code>uiMount</code> + <code>disableAutoPosition</code>.</span>
         </p>
       </div>
     </section>
 
     <section class="demo-section">
-      <h2>10. Debug state</h2>
+      <h2>10. стили</h2>
+      <div class="controls">
+        <button id="disable-style">Toggle style panel</button>
+      </div>
+      <div class="hint">
+        <p>Не импортируйте стили для кастомизации панели и кнопки</p>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>11. Debug state</h2>
       <div class="controls">
         <button id="log-state">Лог состояния в консоль</button>
       </div>
@@ -228,7 +240,7 @@
   </main>
 
   <script type="module">
-    import { createA11yView } from '../dist/index.mjs'
+    import { createA11yView } from './dist/index.mjs'
 
     let a11y = null
     let mode = 'control'
@@ -236,6 +248,8 @@
     let storageMode = 'sessionStorage'
     let hideStrategy = 'transparent'
     let uiMode = 'text'
+    let mountInLayout = false
+    let uiStyleEnabled = true
 
     const stateEl = document.getElementById('state')
 
@@ -280,7 +294,11 @@
         locale,
         enabled: true,
         storageMode,
+        uiMount: mountInLayout ? '#a11y-slot' : undefined,
+        disableAutoPosition: mountInLayout,
+        panelClassName: 'my-a11y-panel',
         button: currentButtonConfig(),
+        closeOnOutsideClick: true,
         images: {
           hideStrategy,
           hideSelectors: ['.js-slider', '.media-card'],
@@ -376,11 +394,20 @@
       document.getElementById('ui-text').onclick = () => { uiMode = 'text'; init(mode) }
       document.getElementById('ui-icon').onclick = () => { uiMode = 'icon'; init(mode) }
       document.getElementById('ui-icon-text').onclick = () => { uiMode = 'icon-text'; init(mode) }
+      document.getElementById('ui-fixed').onclick = () => { mountInLayout = false; init(mode) }
+      document.getElementById('ui-mount').onclick = () => { mountInLayout = true; init(mode) }
+
+      const uiStyleLink = document.getElementById('a11y-ui-style')
+      document.getElementById('disable-style').onclick = () => {
+        uiStyleEnabled = !uiStyleEnabled
+        if (uiStyleLink) {
+          uiStyleLink.disabled = !uiStyleEnabled
+        }
+      }
     }
 
     bindButtons()
     init('control')
   </script>
 </body>
-
 </html>
